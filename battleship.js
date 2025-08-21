@@ -44,7 +44,7 @@ var hitCount = 0;
    0 = empty, 1 = part of a ship, 2 = a sunken part of a ship, 3 = a missed shot
 */
 var gameBoard = [
-				[0,0,0,1,1,1,1,0,0,0],
+				[4,0,0,1,1,1,1,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,1,0,0,0],
@@ -79,6 +79,12 @@ function fireTorpedo(e) {
 			e.target.style.background = 'red';
 			// set this square's value to 2 to indicate the ship has been hit
 			gameBoard[row][col] = 2;
+
+		} else if (gameBoard[row][col] == 4) {
+			e.target.style.background = 'black';
+			// set this square's value to 4 to indicate the mine has been hit
+			gameBoard[row][col] = 4;
+			alert("BOOM you hit a mine, you loser!")
 			
 			// increment hitCount each time a ship is hit
 			hitCount++;
