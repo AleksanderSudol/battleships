@@ -2,6 +2,8 @@ Hur vi har jobbat som en grupp, På första lektionen så satt jag och aleksande
 
 På andra lektionen så gick samir med i vår grupp och vi fick in han i koden, vi hittade en bas model för sänka skäpp på nätet, vi justerade den lite och la till en lose condition, och sitter just nu och funderar på hur vi ska lägga in saker i databasen och försöka få tillgång till en databas. Samir har även lyckats fixa en randomiserad båt placering, vi fick även svårigheter med att koppla samir med github
 
-ska ha en php funktion som blir anropad av javascripten när man vinner
+Vi tog bort index.html och bytte ut den till index.php, laddade upp index.php till https://websrv2-ak.ntigskovde.se/ Det vi även har gjort var att få problem med att koppla databasen till webbsidan (vi fick det att fungera (behövde lägga till databasnamn)) sedan så har vi stött på ett problem, problemet är att själva gameboarden där man spelar inte dyker upp på index.php den fungerade när det var på html men inte.. php? samir skolkis (bad boy)
+
+planen är att man ska ha en php funktion som blir anropad av javascripten när man vinner
 
 Hur koden fungerar -- 
