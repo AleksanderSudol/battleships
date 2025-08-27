@@ -9,6 +9,20 @@
     <nav>
         <h1>Choose gamemode</h1>
     </nav>
+<?php
+$servername = "ntigskov_websrv2-ak";
+$username = "ntigskov_websrv2-ak";
+$password = "jAvjEErb}M8U";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+?>
     
 </body>
 </html>
