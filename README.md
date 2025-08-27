@@ -2,4 +2,6 @@ Hur vi har jobbat som en grupp, På första lektionen så satt jag och aleksande
 
 På andra lektionen så gick samir med i vår grupp och vi fick in han i koden, vi hittade en bas model för sänka skäpp på nätet, vi justerade den lite och la till en lose condition, och sitter just nu och funderar på hur vi ska lägga in saker i databasen och försöka få tillgång till en databas. Samir har även lyckats fixa en randomiserad båt placering, vi fick även svårigheter med att koppla samir med github
 
+ska ha en php funktion som blir anropad av javascripten när man vinner
+
 Hur koden fungerar -- 
