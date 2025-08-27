@@ -10,7 +10,7 @@
         <h1>Choose gamemode</h1>
     </nav>
 <?php
-$servername = "ntigskov_websrv2-ak";
+$servername = "localhost";
 $username = "ntigskov_websrv2-ak";
 $password = "jAvjEErb}M8U";
 
