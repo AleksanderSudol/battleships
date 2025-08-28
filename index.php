@@ -24,9 +24,9 @@
 
 <script type="text/javascript" src="battleship.js"></script>
 
-<form action="welcome.php" method="POST">
-Username:<input type="text" name="name"><br>
-<input type="submit">
+<form action="" method="POST">
+    Username:<input type="text" name="name" required><br>
+    <input type="submit" value="Skicka Poang">
 </form>
 
 <?php
@@ -41,6 +41,40 @@ mysqli_select_db($conn, "ntigskov_websrv2-ak");
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+
+// handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+
+    // check if the username exists in the database
+    $checkQuery = $conn->prepare("SELECT * FROM Ledarbrada WHERE Anvandarnamn = ?");
+    $checkQuery->bind_param("s", $name);
+
+    $checkResult = mysqli_query($conn, $checkQuery);
+
+    if (mysqli_num_rows($checkResult) > 0) {
+        // if the username exists, increment the score
+        $updateQuery = $conn->prepare("UPDATE Ledarbrada SET Poang = Poang + 1 WHERE Anvandarnamn = ?");
+        $updateQuery->bind_param("s", $name);
+
+        if (mysqli_query($conn, $updateQuery)) {
+            echo "<p>Score updated successfully for $name!</p>";
+        } else {
+            echo "<p>Error updating score: " . mysqli_error($conn) . "</p>";
+        }
+    } else {
+        // if the username does not exist, insert a new record with 1 point
+        $insertQuery = $conn->prepare("INSERT INTO Ledarbrada (Anvandarnamn, Poang) VALUES (?, 1)");
+        $insertQuery->bind_param("s", $name);
+        
+        if (mysqli_query($conn, $insertQuery)) {
+            echo "<p>New user $name added with 1 point!</p>";
+        } else {
+            echo "<p>Error adding user: " . mysqli_error($conn) . "</p>";
+        }    
+    }
+}
+
 echo "Connected successfully";
 
 $query = "SELECT * FROM Ledarbrada";
@@ -54,7 +88,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
     echo json_encode($result);
     exit;
 }
-?>
+
+$conn->close();
 ?>
     
 </body>
