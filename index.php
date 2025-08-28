@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">                       
 </head>
 <body>
     <nav>
@@ -50,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $checkQuery = $conn->prepare("SELECT * FROM Ledarbrada WHERE Anvandarnamn = ?");
     $checkQuery->bind_param("s", $name);
 
-    $checkResult = mysqli_query($conn, $checkQuery);
+    $checkQuery->execute();
 
     if (mysqli_num_rows($checkResult) > 0) {
         // if the username exists, increment the score
         $updateQuery = $conn->prepare("UPDATE Ledarbrada SET Poang = Poang + 1 WHERE Anvandarnamn = ?");
         $updateQuery->bind_param("s", $name);
 
-        if (mysqli_query($conn, $updateQuery)) {
+        if ($updateQuery->execute()) {
             echo "<p>Score updated successfully for $name!</p>";
         } else {
             echo "<p>Error updating score: " . mysqli_error($conn) . "</p>";
@@ -66,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // if the username does not exist, insert a new record with 1 point
         $insertQuery = $conn->prepare("INSERT INTO Ledarbrada (Anvandarnamn, Poang) VALUES (?, 1)");
         $insertQuery->bind_param("s", $name);
-        
-        if (mysqli_query($conn, $insertQuery)) {
+
+        if ($insertQuery->execute()) {
             echo "<p>New user $name added with 1 point!</p>";
         } else {
             echo "<p>Error adding user: " . mysqli_error($conn) . "</p>";
