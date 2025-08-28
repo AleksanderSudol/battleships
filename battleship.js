@@ -62,7 +62,7 @@ var gameBoard = [
 				[0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0]
-				]
+				];
 
 // i hate minorities
 function randomBoard() {
@@ -147,6 +147,7 @@ function fireTorpedo(e) {
 			// this definitely shouldn't be hard-coded, but here it is anyway. lazy, simple solution:
 			if (hitCount == 17) {
 				alert("All enemy battleships have been defeated! You win!");
+				gameBoardContainer.remove();
 			}
 			
 		// if player clicks a square that's been previously hit, let them know
