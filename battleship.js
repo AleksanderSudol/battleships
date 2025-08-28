@@ -5,6 +5,7 @@ var squareSize = 50;
 
 // get the container element
 var gameBoardContainer = document.getElementById("gameboard");
+var leaderboardContainer = document.getElementById("leaderboard");
 
 // make the grid columns and rows
 for (i = 0; i < cols; i++) {
@@ -148,7 +149,40 @@ function fireTorpedo(e) {
 			if (hitCount == 17) {
 				alert("All enemy battleships have been defeated! You win!");
 				gameBoardContainer.remove();
-				alert("aklaalalalal")
+
+				var lbData 
+
+				// fetch leaderboard data from the server
+				fetch('index.php?action=getLeaderboard')
+				.then(response => response.json())
+				.then(data => {
+					lbData = data
+				})
+				.catch(error => console.error('Error fetching leaderboard:', error));
+
+				// clear the leaderboard container
+				leaderboardContainer.innerHTML = '';
+					
+				// create and append ze leaderboard title
+				const title = document.createElement('h2');
+				title.textContent = 'Leaderboard';
+				leaderboardContainer.appendChild(title);
+
+				// create and append le leaderboard table
+				const table = document.createElement('table');
+				const headerRow = document.createElement('tr');
+				headerRow.innerHTML = '<th>Rank</th><th>Name</th><th>Score</th>';
+				table.appendChild(headerRow);
+
+				lbData.forEach((player, index) => {
+					if (index <= 10) {
+						const row = document.createElement('tr');
+						row.innerHTML = `<td>${index + 1}</td><td>${player.name}</td><td>${player.score}</td>`;
+						table.appendChild(row);
+					}
+				});
+			
+				leaderboardContainer.appendChild(table);		
 			}
 			
 		// if player clicks a square that's been previously hit, let them know
