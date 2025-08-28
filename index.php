@@ -31,15 +31,20 @@ Username:<input type="text" name="name"><br>
 $servername = "localhost";
 $username = "ntigskov_websrv2-ak";
 $password = "jAvjEErb}M8U";
-
-// Create connection
 $conn = new mysqli($servername, $username, $password);
+
+mysqli_select_db($conn, "ntigskov_websrv2-ak");
 
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 echo "Connected successfully";
+
+$query = "SELECT * FROM score";
+$result = mysqli_query($conn, $query);
+
+echo '<h1>' . $hometitle . '</h1>';
 ?>
     
 </body>
