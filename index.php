@@ -48,7 +48,7 @@ echo '<h1>' . $hometitle . '</h1>';
 
 // Handle AJAX request
 if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
-    $query = "SELECT name, score FROM players ORDER BY score DESC LIMIT 10";
+    $query = "SELECT Anvandarnamn, Poang FROM Ledarbrada ORDER BY Poang DESC LIMIT 10";
     $result = mysqli_query($conn, $query);
 
     echo json_encode($result);
