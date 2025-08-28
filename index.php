@@ -19,6 +19,8 @@
 
 <div id="gameboard">
 </div>
+<div id="leaderboard">
+</div>
 
 <script type="text/javascript" src="battleship.js"></script>
 
@@ -43,8 +45,6 @@ echo "Connected successfully";
 
 $query = "SELECT * FROM Ledarbrada";
 $result = mysqli_query($conn, $query);
-
-echo '<h1>' . $hometitle . '</h1>';
 
 // Handle AJAX request
 if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
