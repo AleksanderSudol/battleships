@@ -50,15 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // check if the username exists in the database
     $checkQuery = $conn->prepare("SELECT * FROM Ledarbrada WHERE Anvandarnamn = ?");
     $checkQuery->bind_param("s", $name);
-
     $checkQuery->execute();
+    $checkResult = $checkQuery->get_result();
 
     if (mysqli_num_rows($checkResult) > 0) {
         // if the username exists, increment the score
         $updateQuery = $conn->prepare("UPDATE Ledarbrada SET Poang = Poang + 1 WHERE Anvandarnamn = ?");
         $updateQuery->bind_param("s", $name);
+        $updateQuery->execute();
+        $updQueryResult = $updateQuery->get_result();
 
-        if ($updateQuery->execute()) {
+        if ($updQueryResult) {
             echo "<p>Score updated successfully for $name!</p>";
         } else {
             echo "<p>Error updating score: " . mysqli_error($conn) . "</p>";
@@ -67,13 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // if the username does not exist, insert a new record with 1 point
         $insertQuery = $conn->prepare("INSERT INTO Ledarbrada (Anvandarnamn, Poang) VALUES (?, 1)");
         $insertQuery->bind_param("s", $name);
+        $insertQuery->execute();
+        $insQueryResult = $insertQuery->get_result();
 
-        if ($insertQuery->execute()) {
+        if ($insQueryResult) {
             echo "<p>New user $name added with 1 point!</p>";
         } else {
             echo "<p>Error adding user: " . mysqli_error($conn) . "</p>";
         }    
     }
+
+    // close retard statements
+    $checkQuery->close();
+    if (isset($updateQuery)) $updateQuery->close();
+    if (isset($insertQuery)) $insertQuery->close();
 }
 
 echo "Connected successfully";
