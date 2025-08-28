@@ -41,31 +41,17 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully";
 
-$query = "SELECT * FROM score";
+$query = "SELECT * FROM Ledarbrada";
 $result = mysqli_query($conn, $query);
 
 echo '<h1>' . $hometitle . '</h1>';
 
-// Database connection
-$host = 'localhost';
-$dbname = 'battleships';
-$username = 'root';
-$password = '';
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
-
 // Handle AJAX request
 if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
-    $stmt = $pdo->query("SELECT name, score FROM players ORDER BY score DESC LIMIT 10");
-    $leaderboard = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $query = "SELECT name, score FROM players ORDER BY score DESC LIMIT 10";
+    $result = mysqli_query($conn, $query);
 
-    header('Content-Type: application/json');
-    echo json_encode($leaderboard);
+    echo json_encode($result);
     exit;
 }
 ?>
