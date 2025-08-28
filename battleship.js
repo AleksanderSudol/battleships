@@ -148,6 +148,7 @@ function fireTorpedo(e) {
 			if (hitCount == 17) {
 				alert("All enemy battleships have been defeated! You win!");
 				gameBoardContainer.remove();
+				alert("aklaalalalal")
 			}
 			
 		// if player clicks a square that's been previously hit, let them know
