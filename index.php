@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($updQueryResult) {
             echo "<p>Score updated successfully for $name!</p>";
         } else {
-            echo "<p>Error updating score: " . mysqli_error($conn) . "</p>";
+            echo "<p>Error updating score: " . $updateQuery->error . "</p>";
         }
     } else {
         // if the username does not exist, insert a new record with 1 point
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($insQueryResult) {
             echo "<p>New user $name added with 1 point!</p>";
         } else {
-            echo "<p>Error adding user: " . mysqli_error($conn) . "</p>";
+            echo "<p>Error adding user: " . $insertQuery->error . "</p>";
         }    
     }
 
@@ -90,12 +90,20 @@ echo "Connected successfully";
 $query = "SELECT * FROM Ledarbrada";
 $result = mysqli_query($conn, $query);
 
-// Handle AJAX request
+// Handle AJAX request for leaderboard
 if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
     $query = "SELECT Anvandarnamn, Poang FROM Ledarbrada ORDER BY Poang DESC LIMIT 10";
-    $result = mysqli_query($conn, $query);
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    echo json_encode($result);
+    $leaderboard = [];
+    while ($row = $result->fetch_assoc()) {
+        $leaderboard[] = $row;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($leaderboard);
     exit;
 }
 
