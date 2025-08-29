@@ -154,9 +154,15 @@ function fireTorpedo(e) {
 
 				// fetch leaderboard data from the server
 				fetch('index.php?action=getLeaderboard')
-				.then(response => response.json())
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
 				.then(data => {
-					lbData = data
+					lbData = data;
+					// Process leaderboard data here
 				})
 				.catch(error => console.error('Error fetching leaderboard:', error));
 
