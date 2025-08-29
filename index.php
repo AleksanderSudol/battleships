@@ -101,8 +101,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
     while ($row = $result->fetch_assoc()) {
         $leaderboard[] = $row;
     }
-
-    header('Content-Type: application/json');
+    
     echo json_encode($leaderboard);
     exit;
 }
