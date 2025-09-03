@@ -8,4 +8,5 @@ planen är att man ska ha en php funktion som blir anropad av javascripten när 
 
 Vi har fixat brädan så den funkar som den ska, problemet var bara att vi inte hade kopplat php koden med css. Vi har också en nästan klar leaderboard där man kan se användar namn samt poängen, man får 1 poäng för varje vinst.
 
+Vi har gjort väldigt mycket, leaderboarden är nu klar och vi har gjort det lite snyggare också
 Hur koden fungerar -- 
