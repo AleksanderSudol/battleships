@@ -43,12 +43,15 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+$query = "SELECT * FROM Ledarbrada";
+$result = mysqli_query($conn, $query);
+
 // handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
 
     // check if the username exists in the database
-    $checkQuery = $conn->prepare("SELECT * FROM Ledarbrada WHERE Anvandarnamn = ?");
+    $checkQuery = $conn->prepare("SELECT * FROM Ledarbrada WHERE Anvandarnamn = ?"); //prepared statement
     $checkQuery->bind_param("s", $name);
     $checkQuery->execute();
     $checkResult = $checkQuery->get_result();
@@ -101,11 +104,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'getLeaderboard') {
     while ($row = $result->fetch_assoc()) {
         $leaderboard[] = $row;
     }
-    
+
     header('Content-Type: application/json');
     echo json_encode($leaderboard);
     exit;
 }
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $anvandarnamn = $row["Anvandarnamn"];
+            $poang = $row["Poang"];
+            echo " ". $anvandarnamn.":". $poang;
+        }
+    }
+                
 
 $conn->close();
 ?>
